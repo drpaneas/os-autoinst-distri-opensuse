@@ -124,7 +124,13 @@ sub run() {
 
     }
 
-    assert_shutdown;
+    # shutdown on PPC takes longer than 60s
+    if (check_var('ARCH', 'ppc64le')) {
+        assert_shutdown(300);
+    } else {
+        assert_shutdown;
+    }
+
 }
 
 sub test_flags() {
